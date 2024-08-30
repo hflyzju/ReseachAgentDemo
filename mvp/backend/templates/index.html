@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResearchAgent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 40%;
+            left: 40%;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loading {
+            display: none;
+            position: fixed;
+            width: 10%;
+            height: 10%;
+            z-index: 1000;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #query {
+            width: 80%;
+            max-width: 1000px; /* 可以根据需要调整最大宽度 */
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading">
+            <div class="spinner"></div>
+        </div>
+        <h1>ResearchAgent</h1>
+<!--        <div class="search-container">-->
+<!--            <input type="text" id="query" placeholder="Come and try my idea generation ability, please enter the arxiv link, for example: https://arxiv.org/abs/2404.07738">-->
+<!--&lt;!&ndash;            <input type="file" id="file-upload">&ndash;&gt;-->
+<!--            <button onclick="search()">🔍</button>-->
+<!--        </div>-->
+
+        <div class="search-container">
+    <select id="query">
+        <option value="https://arxiv.org/abs/2310.08129">Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting</option>
+        <option value="https://arxiv.org/abs/2408.15998v1">Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders</option>
+        <option value="https://arxiv.org/abs/2408.14906">Writing in the Margins: Better Inference Pattern for Long Context Retrieval</option>
+        <!-- 可以根据需要添加更多选项 -->
+    </select>
+    <button onclick="search()">🔍</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab" id="paper-tab" onclick="showTab('paper')" disabled>Paper</button>
+            <button class="tab" id="problem-tab" onclick="showTab('problem')" disabled>Problem</button>
+            <button class="tab" id="method-tab" onclick="showTab('method')" disabled>Method</button>
+            <button class="tab" id="experiment-tab" onclick="showTab('experiment')" disabled>Experiment</button>
+            <button class="tab" id="ideate-tab" onclick="showTab('ideate')" disabled>Ideate</button>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="buttons">
+            <button id='continue-tab' onclick="continueTab()" disabled>Continue</button>
+            <button id='regenerate-tab'onclick="regenerate()" disabled>Regenerate</button>
+        </div>
+        <div class="result" id="result">
+            <!-- Result content will be displayed here -->
+        </div>
+        <div class="gpt_feedback" id="gpt_feedback">
+            <!-- Result content will be displayed here -->
+        </div>
+        <div class="feedback">
+            <textarea id="human-feedback" placeholder="Enter your feedback"></textarea>
+        </div>
+
+        <button id='export-tab' onclick="exportContent()" disabled>Export</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

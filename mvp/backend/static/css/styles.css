@@ -1,0 +1,255 @@
+/* 设置 body 元素的样式 */
+body {
+    font-family: Arial, sans-serif; /* 设置字体为 Arial，备用字体为 sans-serif */
+    background-color: #f4f4f4; /* 设置背景颜色为浅灰色 */
+    margin: 0; /* 移除默认的外边距 */
+    padding: 0; /* 移除默认的内边距 */
+}
+
+/* 设置 .container 类的样式 */
+.container {
+    width: 80%; /* 设置宽度为父元素的 80% */
+    margin: 0 auto; /* 水平居中 */
+    padding: 20px; /* 设置内边距为 20 像素 */
+    background-color: #fff; /* 设置背景颜色为白色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border-radius: 8px; /* 设置圆角半径为 8 像素 */
+}
+
+/* 设置 h1 元素的样式 */
+h1 {
+    text-align: center; /* 文本居中 */
+    color: #333; /* 设置文本颜色为深灰色 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .search-container 类的样式 */
+.search-container {
+    display: flex; /* 使用 flex 布局 */
+    justify-content: center; /* 水平居中 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .search-container 内部的文本输入框样式 */
+.search-container input[type="text"] {
+    width: 60%; /* 设置宽度为父元素的 60% */
+    padding: 10px; /* 设置内边距为 10 像素 */
+    border: 1px solid #ccc; /* 设置边框颜色为浅灰色 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+}
+
+/* 设置 .search-container 内部的文件输入框和按钮的样式 */
+.search-container input[type="file"],
+.search-container button {
+    padding: 5px 10px; /* 调整内边距 */
+    margin-left: 10px; /* 设置左外边距为 10 像素 */
+    font-size: 16px; /* 设置字体大小为 16 像素 */
+    border: none; /* 移除边框 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    cursor: pointer; /* 设置鼠标指针为手型 */
+    display: flex; /* 使用 flex 布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+/* 设置文件输入框的背景颜色和文本颜色 */
+.search-container input[type="file"] {
+    background-color: #007bff; /* 设置背景颜色为蓝色 */
+    color: #fff; /* 设置文本颜色为白色 */
+    position: relative; /* 设置相对定位 */
+    overflow: hidden; /* 隐藏溢出内容 */
+    width: 80px; /* 设置固定宽度 */
+}
+
+/* 使用伪元素显示 "upfile" 文本 */
+.search-container input[type="file"]::before {
+    content: "UpfilePdf"; /* 设置显示的文本 */
+    position: absolute; /* 绝对定位 */
+    top: 50%; /* 垂直居中 */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -50%); /* 使文本居中 */
+    color: #fff; /* 设置文本颜色为白色 */
+    pointer-events: none; /* 禁用伪元素的鼠标事件 */
+}
+
+/* 隐藏实际的文件输入框文本 */
+.search-container input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden; /* 隐藏按钮 */
+}
+
+/* 设置按钮的背景颜色和文本颜色 */
+.search-container button {
+    background-color: #28a745; /* 设置背景颜色为绿色 */
+    color: #fff; /* 设置文本颜色为白色 */
+}
+
+/* 设置文件输入框和按钮的悬停效果 */
+.search-container input[type="file"]:hover,
+.search-container button:hover {
+    background-color: #0056b3; /* 设置悬停时的背景颜色为深蓝色 */
+}
+
+/* 设置 .tabs 类的样式 */
+.tabs {
+    display: flex; /* 使用 flex 布局 */
+    justify-content: space-around; /* 子元素均匀分布 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .tab 类的样式 */
+.tab {
+    padding: 10px 20px; /* 设置内边距 */
+    border: 1px solid #ccc; /* 设置边框颜色为浅灰色 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    cursor: pointer; /* 设置鼠标指针为手型 */
+    background-color: #f8f9fa; /* 设置背景颜色为浅灰色 */
+    color: #000; /* 设置文本颜色为黑色 */
+}
+
+.tab:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 设置 .tab 类的悬停效果 */
+.tab:not(:disabled):hover {
+    background-color: #f5c6cb; /* 设置悬停时的背景颜色为浅红色 */
+}
+
+/* 设置 .tab.active 类的样式 */
+.tab.active {
+    background-color: #dc3545; /* 设置激活状态的背景颜色为红色 */
+    color: #fff; /* 设置激活状态的文本颜色为白色 */
+}
+
+/* 设置 .buttons 类的样式 */
+.buttons {
+    display: flex; /* 使用 flex 布局 */
+    justify-content: space-between; /* 子元素均匀分布 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .buttons 内部按钮的样式 */
+.buttons .continue-button,
+.buttons .regenerate-button {
+    display: block; /* 设置为块级元素 */
+    /*width: 100%; /* 设置宽度为父元素的 100% */
+    background-color: #007bf0; /* 设置背景颜色为蓝色 */
+    color: #fff; /* 设置文本颜色为白色 */
+    padding: 10px; /* 设置内边距为 10 像素 */
+    margin: 10px 0; /* 设置上下外边距为 10 像素 */
+    border: none; /* 移除边框 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    cursor: pointer; /* 设置鼠标指针为手型 */
+}
+
+
+/* 设置继续按钮的背景颜色和文本颜色 */
+.buttons .continue-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 设置重新生成按钮的背景颜色和文本颜色 */
+.buttons .regenerate-button {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 设置 button 元素的样式 */
+button {
+    padding: 10px 20px; /* 设置内边距 */
+    font-size: 16px; /* 设置字体大小为 16 像素 */
+    background-color: #007bff; /* 设置背景颜色为蓝色 */
+    color: #fff; /* 设置文本颜色为白色 */
+    border: none; /* 移除边框 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    cursor: pointer; /* 设置鼠标指针为手型 */
+    transition: background-color 0.3s; /* 设置背景颜色变化的过渡效果 */
+}
+
+/* 设置 button 元素的悬停效果 */
+button:not(:disabled):hover {
+    background-color: #0056b3; /* 设置悬停时的背景颜色为深蓝色 */
+}
+
+.button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* 设置 .result 类的样式 */
+.result {
+    padding: 20px; /* 设置内边距为 20 像素 */
+    border: 1px solid #ddd; /* 设置边框颜色为浅灰色 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    background-color: #d4edda; /* 设置背景颜色为浅绿色 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .gpt_feedback 类的样式 */
+.gpt_feedback {
+    padding: 20px; /* 设置内边距为 20 像素 */
+    border: 1px solid #ddd; /* 设置边框颜色为浅灰色 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    background-color: #d4edda; /* 设置背景颜色为浅绿色 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .feedback 类的样式 */
+.feedback {
+    background-color: #fff3cd; /* 设置背景颜色为浅黄色 */
+    padding: 20px; /* 设置内边距为 20 像素 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .feedback 内部文本区域的样式 */
+.feedback textarea {
+    width: 100%; /* 设置宽度为父元素的 100% */
+    padding: 10px; /* 设置内边距为 10 像素 */
+    font-size: 16px; /* 设置字体大小为 16 像素 */
+    border: 1px solid #ddd; /* 设置边框颜色为浅灰色 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+    background-color: #e9ecef; /* 设置背景颜色为浅灰色 */
+}
+
+/* 设置 .progress-bar 类的样式 */
+.progress-bar {
+    width: 100%; /* 设置宽度为父元素的 100% */
+    background-color: #e9ecef; /* 设置背景颜色为浅灰色 */
+    height: 20px; /* 设置高度为 20 像素 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    overflow: hidden; /* 隐藏超出部分 */
+    margin-bottom: 20px; /* 设置下外边距为 20 像素 */
+}
+
+/* 设置 .progress 类的样式 */
+.progress {
+    width: 0; /* 初始宽度为 0 */
+    height: 100%; /* 高度为父元素的 100% */
+    background-color: #dc3545; /* 设置背景颜色为红色 */
+    transition: width 0.3s; /* 设置宽度变化的过渡效果 */
+}
+
+/* 设置 .export 类的样式 */
+.export {
+    padding: 10px 20px; /* 设置内边距 */
+    font-size: 16px; /* 设置字体大小为 16 像素 */
+    background-color: #f8d7da; /* 设置背景颜色为浅红色 */
+    border: none; /* 移除边框 */
+    border-radius: 4px; /* 设置圆角半径为 4 像素 */
+    cursor: pointer; /* 设置鼠标指针为手型 */
+    transition: background-color 0.3s; /* 设置背景颜色变化的过渡效果 */
+}
+
+/* 设置 .export 类的悬停效果 */
+.export:hover {
+    background-color: #f5c6cb; /* 设置悬停时的背景颜色为浅红色 */
+}
+
