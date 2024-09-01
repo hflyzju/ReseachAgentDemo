@@ -149,6 +149,23 @@ def parse_to_html(input_list, target_paper = None):
 def index():
     return render_template('index.html')
 
+
+"""
+新增get_paper_list接口，调用后返回[["Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting", "https://arxiv.org/abs/2310.08129"], 
+["Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders", "https://arxiv.org/abs/2408.15998v1"],
+["Writing in the Margins: Better Inference Pattern for Long Context Retrieval", "https://arxiv.org/abs/2408.14906"],
+]
+"""
+@app.route('/get_paper_list', methods=['GET'])
+def get_paper_list():
+    # 这里可以替换为你的论文列表
+    paper_list = [
+        ["Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting", "https://arxiv.org/abs/2310.08129"],
+        ["Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders", "https://arxiv.org/abs/2408.15998v1"],
+        ["Writing in the Margins: Better Inference Pattern for Long Context Retrieval", "https://arxiv.org/abs/2408.14906"],
+    ]
+    return jsonify(paper_list)
+
 @app.route('/search', methods=['POST'])
 def search():
     session_id = session.get('session_id')
