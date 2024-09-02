@@ -299,6 +299,7 @@ def continue_tab():
                 'gpt_feedback_rating': markdown.markdown(gpt_feedback.get_rating()),
                 "rating_scores": rating_scores
             }
+            logger.info(f'Generated content for tab: {tab}, rating_scores: {content["rating_scores"]}')
     else:
         # Generate content for the next tab
         content = {
@@ -309,6 +310,7 @@ def continue_tab():
             'gpt_feedback_content': f'This is {tab} content gpt_feedback_content',
             'gpt_feedback_rating': f'This is {tab} content gpt_feedback_rating',
         }
+
     return jsonify(content)
 
 
