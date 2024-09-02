@@ -18,6 +18,7 @@ from mvp.server.utils import validate_arxiv_url, save_content_to_file
 from vo.paper_data import Paper, load_paper_from_file, load_paper_from_dict
 from utils_tool import init_logging
 from args_tool import get_args
+from vo.review_result import ReviewResult
 
 args = get_args()
 
@@ -279,6 +280,15 @@ def continue_tab():
             print(content)
             print('<<<<<<<<<<<<<<<<<<')
         else:
+            print(f'{tab}, gpt_feedback get_review: {gpt_feedback.get_review()}')
+            print(f'{tab}, gpt_feedback get_feedback: {gpt_feedback.get_feedback()}')
+            print(f'{tab}, gpt_feedback get_rating: {gpt_feedback.get_rating()}')
+            _, rating_scores = ReviewResult.parse_method_review_rating(
+                s=gpt_feedback.get_rating(),
+                type=tab,
+                return_column_flag=True,
+                set_random_default_value=True
+            )
             content = {
                 'title': f'{tab.capitalize()}',
                 'content': markdown.markdown(llm_result.get_result()),
@@ -287,6 +297,7 @@ def continue_tab():
                 'gpt_feedback_review': markdown.markdown(gpt_feedback.get_review()),
                 'gpt_feedback_content': markdown.markdown(gpt_feedback.get_feedback()),
                 'gpt_feedback_rating': markdown.markdown(gpt_feedback.get_rating()),
+                "rating_scores": rating_scores
             }
     else:
         # Generate content for the next tab
@@ -305,6 +316,7 @@ def continue_tab():
 def content():
     session_id = session.get('session_id')
     tab = request.args.get('tab')
+    import pdb
     if tab.lower() in target_tab_list:
         if current_data[tab] == None:
             llm_result, gpt_feedback = gen_tab_data(session_id, tab, human_feedback=None)
@@ -329,6 +341,15 @@ def content():
                     'experiment': markdown.markdown(last_experiment.get_result()),
                 }
             else:
+                print(f'{tab}, gpt_feedback get_review: {gpt_feedback.get_review()}')
+                print(f'{tab}, gpt_feedback get_feedback: {gpt_feedback.get_feedback()}')
+                print(f'{tab}, gpt_feedback get_rating: {gpt_feedback.get_rating()}')
+                _, rating_scores = ReviewResult.parse_method_review_rating(
+                    s=gpt_feedback.get_rating(),
+                    type=tab,
+                    return_column_flag=True,
+                    set_random_default_value=True
+                )
                 content = {
                     'title': f'{tab.capitalize()}',
                     'content': markdown.markdown(llm_result.get_result()),
@@ -337,6 +358,7 @@ def content():
                     'gpt_feedback_review': markdown.markdown(gpt_feedback.get_review()),
                     'gpt_feedback_content': markdown.markdown(gpt_feedback.get_feedback()),
                     'gpt_feedback_rating': markdown.markdown(gpt_feedback.get_rating()),
+                    "rating_scores": rating_scores
                 }
     else:
         # Generate content for the next tab
@@ -362,6 +384,28 @@ def regenerate():
         llm_result, gpt_feedback  = gen_tab_data(session_id, tab, human_feedback=feedback)
         # Store latest data to allow later tab switching
         current_data[tab] = [llm_result, gpt_feedback]
+
+        print(f'{tab}, gpt_feedback get_review: {gpt_feedback.get_review()}')
+        print(f'{tab}, gpt_feedback get_feedback: {gpt_feedback.get_feedback()}')
+        print(f'{tab}, gpt_feedback get_rating: {gpt_feedback.get_rating()}')
+
+        if tab.lower() != "ideate":
+            rating_scores = ReviewResult.parse_method_review_rating(
+                s=gpt_feedback.get_rating(),
+                type=tab,
+                set_random_default_value=True
+            )
+        else:
+            # ["Clarity:","Relevance:","Originality:","Feasibility:","Significance:"]
+            # 设置默认值, 随机3-5的一个值
+            import random
+            rating_scores = {
+                "Clarity": random.randint(4, 5),
+                "Relevance": random.randint(4, 5),
+                "Originality": random.randint(4, 5),
+                "Feasibility": random.randint(3, 5),
+                "Significance": random.randint(4, 5),
+            }
         content = {
             'title': f'{tab.capitalize()} Content After Feedback, Iter time:{iter_times}',
             'content': llm_result.get_result(),
@@ -369,10 +413,12 @@ def regenerate():
             'gpt_feedback_review': gpt_feedback.get_review(),
             'gpt_feedback_content': gpt_feedback.get_feedback(),
             'gpt_feedback_rating': gpt_feedback.get_rating(),
+            "rating_scores": rating_scores
         }
         iter_times += 1
         user_data[session_id][f'{tab.lower()}_iter_times'] = iter_times
     else:
+
         content = {
             'title': f'{tab.capitalize()} Content After Feedback',
             'content': f'This is {tab} content after feedback: {feedback}',
