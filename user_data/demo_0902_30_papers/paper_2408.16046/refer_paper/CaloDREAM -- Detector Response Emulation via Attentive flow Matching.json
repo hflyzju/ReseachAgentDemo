@@ -1,0 +1,4 @@
+{
+    "title": "CaloDREAM -- Detector Response Emulation via Attentive flow Matching",
+    "abstract": "Detector simulations are an exciting application of modern generative networks. Their sparse high-dimensional data combined with the required precision poses a serious challenge. We show how combining Conditional Flow Matching with transformer elements allows us to simulate the detector phase space reliably. Namely, we use an autoregressive transformer to simulate the energy of each layer, and a vision transformer for the high-dimensional voxel distributions. We show how dimension reduction via latent diffusion allows us to train more efficiently and how diffusion networks can be evaluated faster with bespoke solvers. We showcase our framework, CaloDREAM, on datasets 2 and 3 of the CaloChallenge."
+}

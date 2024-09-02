@@ -1,0 +1,4 @@
+{
+    "title": "CaloShowerGAN, a Generative Adversarial Networks model for fast calorimeter shower simulation",
+    "abstract": "In particle physics, the demand for rapid and precise simulations is rising. The shift from traditional methods to machine learning-based approaches has led to significant advancements in simulating complex detector responses. CaloShowerGAN is a new approach for fast calorimeter simulation based on Generative Adversarial Network (GAN). We use Dataset 1 of the Fast Calorimeter Simulation Challenge 2022 to demonstrate the efficacy of the model to simulate calorimeter showers produced by photons and pions. The dataset is originated from the ATLAS experiment, and we anticipate that this approach can be seamlessly integrated into the ATLAS system. This development brings a significant improvement compared to the deployed GANs by ATLAS and could offer great enhancement to the current ATLAS fast simulations."
+}

@@ -1,0 +1,4 @@
+{
+    "title": "CaloPointFlow II Generating Calorimeter Showers as Point Clouds",
+    "abstract": "The simulation of calorimeter showers presents a significant computational challenge, impacting the efficiency and accuracy of particle physics experiments. While generative ML models have been effective in enhancing and accelerating the conventional physics simulation processes, their application has predominantly been constrained to fixed detector readout geometries. With CaloPointFlow we have presented one of the first models that can generate a calorimeter shower as a point cloud. This study describes CaloPointFlow II, which exhibits several significant improvements compared to its predecessor. This includes a novel dequantization technique, referred to as CDF-Dequantization, and a normalizing flow architecture, referred to as DeepSet- Flow. The new model was evaluated with the fast Calorimeter Simulation Challenge (CaloChallenge) Dataset II and III."
+}

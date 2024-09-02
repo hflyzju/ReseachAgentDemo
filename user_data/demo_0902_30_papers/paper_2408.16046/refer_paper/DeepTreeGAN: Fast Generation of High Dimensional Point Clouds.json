@@ -1,0 +1,4 @@
+{
+    "title": "DeepTreeGAN: Fast Generation of High Dimensional Point Clouds",
+    "abstract": "In High Energy Physics, detailed and time-consuming simulations are used for particle interactions with detectors. To bypass these simulations with a generative model, the generation of large point clouds in a short time is required, while the complex dependencies between the particles must be correctly modelled. Particle showers are inherently tree-based processes, as each particle is produced by the decay or detector interaction of a particle of the previous generation. In this work, we present a novel Graph Neural Network model (DeepTreeGAN) that is able to generate such point clouds in a tree-based manner. We show that this model can reproduce complex distributions, and we evaluate its performance on the public JetNet dataset."
+}

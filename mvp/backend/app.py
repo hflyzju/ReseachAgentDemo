@@ -23,7 +23,7 @@ args = get_args()
 
 config = {
     "USER_DATA_DIR": "user_data/",
-    "Paper_DATA_DIR": "user_data/all_paper",
+    "Paper_DATA_DIR": "user_data/demo_0902_30_papers",
 }
 
 target_tab_list = ["problem", 'method', 'experiment', 'ideate']
@@ -45,8 +45,9 @@ def load_json_from_file(file_path):
         data = json.load(f)
     return data
 
-def load_test_sample_data(demo_file):
-    data = load_json_from_file(demo_file)
+
+def parse_single_demo_cache_data(data):
+    """解析存下来的数据, 生成对象"""
     test_sample_data = {}
     for tab, result_key, feedback_key in zip(
         ["problem", "method", "experiment", "ideate"],
@@ -67,12 +68,16 @@ def load_test_sample_data(demo_file):
             gpt_feedback_result = ReviewResult.load_from_string(data[feedback_key])
         else:
             raise ValueError(f"Unknown tab: {tab}")
-
         test_sample_data[tab] = {
             "llm_result": llm_result,
             "gpt_feedback_result": gpt_feedback_result
         }
     return test_sample_data
+
+def load_test_sample_data(demo_file):
+    data = load_json_from_file(demo_file)
+    return parse_single_demo_cache_data(data)
+
 
 
 
@@ -81,22 +86,59 @@ test_sample_data = load_test_sample_data(
 )
 
 
-def gen_tab_data(session_id, tab, human_feedback=None):
+
+# paper_2311.16682: data
+paper_id_to_test_sample_data_ori = load_json_from_file(
+    "user_data/demo_0902_30_papers/paper_id_to_idea_result.json"
+)
+
+paper_id_to_test_sample_data = dict()
+for k, v in paper_id_to_test_sample_data_ori.items():
+    paper_id_to_test_sample_data[k] = parse_single_demo_cache_data(v)
+
+paper_title_url_list = []
+title_to_url = {}
+for key in paper_id_to_test_sample_data.keys():
+    input_paper_file = f"user_data/demo_0902_30_papers/{key}/input_paper.json"
+    paper = load_json_from_file(input_paper_file)
+    arxiv_id = key.split("_")[-1]
+    paper_url = f"https://arxiv.org/abs/{arxiv_id}"
+    title = paper['title']
+    paper_title_url_list.append([title, paper_url])
+    title_to_url[title] = paper_url
+    s = f"""<option value="{paper_url}">{title}</option>"""
+    """
+    <option value="https://arxiv.org/abs/2310.08129">Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting</option>
+    <option value="https://arxiv.org/abs/2408.15998v1">Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders</option>
+    <option value="https://arxiv.org/abs/2408.14906">Writing in the Margins: Better Inference Pattern for Long Context Retrieval</option>
+
+    """
+    # print(s)
+
+logger.info(f"the length of paper_title_url_list is {len(paper_title_url_list)}")
+
+def gen_tab_data(session_id, tab, paper_url=None,human_feedback=None):
     # llm_result, cur_gpt_feedback_result = f"tab:{tab} test_llm_result", f"tab:{tab} test_gpt_feedback_result"
+    logger.info(f"gen_tab_data | tab: {tab},  paper_url: {paper_url}")
     llm_result = Problem(
-        problem = f"tab: {tab} test llm result",
+        problem=f"tab: {tab} test llm result",
         rationale=f"tab: {tab} test llm rationale",
     )
     cur_gpt_feedback_result = ReviewResult(
-        review = f"tab: {tab} test review",
-        feedback = f"tab: {tab} test feedback",
-        rating = f"tab: {tab} test rating",
+        review=f"tab: {tab} test review",
+        feedback=f"tab: {tab} test feedback",
+        rating=f"tab: {tab} test rating",
     )
     cur_ideate = ideate(
         title=f"tab:{tab} test title", abstract=f"tab:{tab} test abstract"
     )
-
-    tab_data = test_sample_data.get(tab, None)
+    # 1. 兼容之前没有paper_url的方法，没有paper_url时候，直接利用一个默认的数据
+    if paper_url is None:
+        tab_data = test_sample_data.get(tab, None)
+    else:
+        paper_id = f'paper_{paper_url.split("/")[-1]}'
+        tab_data = paper_id_to_test_sample_data.get(paper_id, dict()).get(tab, None)
+    logger.info(f"gen_tab_data | tab_data: {tab_data}")
     if tab_data is not None:
         assert isinstance(tab_data, dict)
         llm_result, cur_gpt_feedback_result = tab_data["llm_result"], tab_data["gpt_feedback_result"]
@@ -108,6 +150,9 @@ def gen_tab_data(session_id, tab, human_feedback=None):
     user_data[session_id][f'last_{tab.lower()}'] = llm_result
     user_data[session_id][f'last_{tab.lower()}_gpt_feedback'] = cur_gpt_feedback_result
     return llm_result, cur_gpt_feedback_result
+
+
+
 
 # Turn json to markdown
 def parse_to_markdown(input_list):
@@ -159,12 +204,14 @@ def index():
 @app.route('/get_paper_list', methods=['GET'])
 def get_paper_list():
     # 这里可以替换为你的论文列表
-    paper_list = [
-        ["Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting", "https://arxiv.org/abs/2310.08129"],
-        ["Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders", "https://arxiv.org/abs/2408.15998v1"],
-        ["Writing in the Margins: Better Inference Pattern for Long Context Retrieval", "https://arxiv.org/abs/2408.14906"],
-    ]
-    return jsonify(paper_list)
+    # paper_list = [
+    #     ["Tailored Visions: Enhancing Text-to-Image Generation with Personalized Prompt Rewriting", "https://arxiv.org/abs/2310.08129"],
+    #     ["Eagle: Exploring The Design Space for Multimodal LLMs with Mixture of Encoders", "https://arxiv.org/abs/2408.15998v1"],
+    #     ["Writing in the Margins: Better Inference Pattern for Long Context Retrieval", "https://arxiv.org/abs/2408.14906"],
+    # ]
+
+
+    return jsonify(paper_title_url_list)
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -180,7 +227,7 @@ def search():
         }
     else:
         paper_id = query.split('/')[-1]
-        paper_data_dir = os.path.join(config['Paper_DATA_DIR'], paper_id)
+        paper_data_dir = os.path.join(config['Paper_DATA_DIR'], f"paper_{paper_id}")
         input_paper_file = os.path.join(paper_data_dir, "input_paper.json")
         paper_info = load_paper_from_file(input_paper_file)
         user_data[session_id]['paper_info'] = paper_info
@@ -191,15 +238,24 @@ def search():
             'flag': 1
         }
         current_data['paper'] = result
+    user_data[session_id]['paper_url'] = query
+
+    logger.info(f'search | session_id:{session_id}, query or paper_url:{query}')
+
     return jsonify(result)
 
 @app.route('/continue', methods=['GET'])
 def continue_tab():
     session_id = session.get('session_id')
     tab = request.args.get('tab').lower()
+    paper_url = request.args.get('paper_url', None)
+    logger.info(f'continue_tab | session_id:{session_id}, continue {tab},  paper_url: {paper_url}')
+    if paper_url is None:
+        paper_url = user_data[session_id].get('paper_url', None)
+        logger.info(f'continue_tab | session_id:{session_id}, continue {tab},  user_data[session_id]: {paper_url}, use this!')
     if tab.lower() in target_tab_list:
         iter_times = user_data[session_id].get(f'{tab.lower()}_iter_times', 0)
-        llm_result, gpt_feedback = gen_tab_data(session_id, tab, human_feedback=None)
+        llm_result, gpt_feedback = gen_tab_data(session_id, tab, paper_url, human_feedback=None)
         # Store latest data to allow later tab switching
         current_data[tab] = [llm_result, gpt_feedback]
         iter_times += 1

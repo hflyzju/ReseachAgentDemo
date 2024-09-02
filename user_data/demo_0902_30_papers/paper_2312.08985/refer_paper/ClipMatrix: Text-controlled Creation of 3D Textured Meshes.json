@@ -1,0 +1,4 @@
+{
+    "title": "ClipMatrix: Text-controlled Creation of 3D Textured Meshes",
+    "abstract": "If a picture is worth thousand words, a moving 3d shape must be worth a million. We build upon the success of recent generative methods that create images fitting the semantics of a text prompt, and extend it to the controlled generation of 3d objects. We present a novel algorithm for the creation of textured 3d meshes, controlled by text prompts. Our method creates aesthetically pleasing high resolution articulated 3d meshes, and opens new possibilities for automation and AI control of 3d assets. We call it \"ClipMatrix\" because it leverages CLIP text embeddings to breed new digital 3d creatures, a nod to the Latin meaning of the word \"matrix\" - \"mother\". See the online gallery for a full impression of our method's capability."
+}

@@ -1,0 +1,4 @@
+{
+    "title": "Normalizing Flows for High-Dimensional Detector Simulations",
+    "abstract": "Whenever invertible generative networks are needed for LHC physics, normalizing flows show excellent performance. A challenge is their scaling to high-dimensional phase spaces. We investigate their performance for fast calorimeter shower simulations with increasing phase space dimension. In addition to the standard architecture we also employ a VAE to compress the dimensionality. Our study provides benchmarks for invertible networks applied to the CaloChallenge."
+}

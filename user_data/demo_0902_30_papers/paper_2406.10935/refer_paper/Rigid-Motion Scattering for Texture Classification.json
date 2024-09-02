@@ -1,0 +1,4 @@
+{
+    "title": "Rigid-Motion Scattering for Texture Classification",
+    "abstract": "A rigid-motion scattering computes adaptive invariants along translations and rotations, with a deep convolutional network. Convolutions are calculated on the rigid-motion group, with wavelets defined on the translation and rotation variables. It preserves joint rotation and translation information, while providing global invariants at any desired scale. Texture classification is studied, through the characterization of stationary processes from a single realization. State-of-the-art results are obtained on multiple texture data bases, with important rotation and scaling variabilities."
+}

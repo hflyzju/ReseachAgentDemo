@@ -1,0 +1,4 @@
+{
+    "title": "CaloGraph: Graph-based diffusion model for fast shower generation in calorimeters with irregular geometry",
+    "abstract": "Denoising diffusion models have gained prominence in various generative tasks, prompting their exploration for the generation of calorimeter responses. Given the computational challenges posed by detector simulations in high-energy physics experiments, the necessity to explore new machine-learning-based approaches is evident. This study introduces a novel graph-based diffusion model designed specifically for rapid calorimeter simulations. The methodology is particularly well-suited for low-granularity detectors featuring irregular geometries. We apply this model to the ATLAS dataset published in the context of the Fast Calorimeter Simulation Challenge 2022, marking the first application of a graph diffusion model in the field of particle physics."
+}

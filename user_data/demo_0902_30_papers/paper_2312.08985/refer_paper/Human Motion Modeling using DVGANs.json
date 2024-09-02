@@ -1,0 +1,4 @@
+{
+    "title": "Human Motion Modeling using DVGANs",
+    "abstract": "We present a novel generative model for human motion modeling using Generative Adversarial Networks (GANs). We formulate the GAN discriminator using dense validation at each time-scale and perturb the discriminator input to make it translation invariant. Our model is capable of motion generation and completion. We show through our evaluations the resiliency to noise, generalization over actions, and generation of long diverse sequences. We evaluate our approach on Human 3.6M and CMU motion capture datasets using inception scores."
+}
